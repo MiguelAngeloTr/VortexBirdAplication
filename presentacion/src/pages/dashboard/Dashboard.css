@@ -1,0 +1,84 @@
+.Dashboard {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  /* Estilo para cada sección de tareas */
+  .ListaTareas,
+  .EnProgreso,
+  .Completadas {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Estilo para el contenedor de los botones */
+  .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  /* Estilo para los títulos de las secciones */
+  h3 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 0;
+  }
+  
+  /* Estilo para los campos de entrada de texto */
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Estilo para los botones de acción */
+  button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo para la lista de tareas */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Estilo para cada tarea */
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Estilo para los botones de acción en las tareas */
+  li button {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 4px 8px;
+  }
+  
+  li button:hover {
+    background-color: #c82333;
+  }

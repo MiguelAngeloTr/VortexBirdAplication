@@ -1,0 +1,101 @@
+.bar{   
+    position: fixed;
+    width: 17.5rem;
+    height: 100%;
+    background: #100C56;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#Logo{
+    width: 181px;
+    height: 50px;
+    margin-top: 2.25rem;
+    margin-left: 2.5rem;
+}
+
+.Menu{
+    font-family: 'Poppins','Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+.divcon{
+    position:relative;
+    margin-top: 1.5rem;
+    margin-left: 3rem;
+    margin-bottom: -1rem;
+}
+
+#icon{
+    width: 18px;
+    height: 18px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    color:#FFFFFF;
+    margin-left: 0px;
+}
+
+.Button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 15px;
+    gap: 10px;
+    width: 230px;
+    height: 40px;
+    background: #100C56;
+    border-radius: 3px;
+    margin-top: 1rem;
+    border: none;
+    margin: 1.5rem;
+}
+
+.Button:hover{
+background: #3A5A80;
+cursor: pointer;
+}
+
+.Button:focus{
+    background: #3A5A80;
+}
+
+p{
+    display: flex;
+  
+    height: 24px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    justify-content: flex-start;
+}
+
+a{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+li{
+list-style-type: none;
+}
+
+ul{
+    padding-left: 0px;
+}
+
+.logout{
+    position:absolute;
+    bottom:5px;
+    left:3px;
+}
