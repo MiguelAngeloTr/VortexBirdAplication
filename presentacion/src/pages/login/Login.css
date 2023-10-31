@@ -18,6 +18,7 @@ body {
 }
 
 
+
 .image-container {
 
     width: 726px;
@@ -176,3 +177,4 @@ body {
     transform: translateY(3px); /* Mueve el botón ligeramente hacia abajo al presionar */
     transition: transform 0.2s, box-shadow 0.2s; /* Agregamos transiciones para una animación suave */
 }
+

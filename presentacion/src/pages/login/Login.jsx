@@ -1,54 +1,54 @@
-import React from 'react'
-import './Login.css'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import axios from 'axios'
-
+import React, { useState } from 'react';
+import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
-
   const navigate = useNavigate();
-
 
   const [credenciales, setCredenciales] = useState({
     email: '',
     password: '',
-  })
+  });
 
+  const [error, setError] = useState(null);
+
+  const usuarios = [
+    {
+      email: 'prueba@gmail.com',
+      password: '1234',
+    },
+
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-   
+
     setCredenciales({
       ...credenciales,
       [name]: value,
-    })
-  }
+    });
+  };
 
-  
   const handleSubmit = (e) => {
-    navigate('/dashboard')
     e.preventDefault();
-    axios.post('http://localhost:4000/api/login', {credenciales})
-        .then(({data}) => {
-      console.log(data);
-    })
-    .catch(({response}) => {
-      console.log(response);
-    })
-  }
+    const usuario = usuarios.find(
+      (user) =>
+        user.email === credenciales.email && user.password === credenciales.password
+    );
 
-
-
+    if (usuario) {
+      navigate('/dashboard');
+    } else {
+      setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+    }
+  };
 
   return (
     <>
       <div className="container">
-        <div className="image-container">
-        </div>
+        <div className="image-container"></div>
         <div className="container">
-          <form onSubmit={handleSubmit} >
+          <form onSubmit={handleSubmit}>
             <div className="login-container">
               <h2>Iniciar Sesión</h2>
 
@@ -61,7 +61,6 @@ const Login = () => {
                 name="email"
               />
 
-
               <labelPassword for="password"><b>Contraseña</b></labelPassword>
               <input
                 type="password"
@@ -71,17 +70,17 @@ const Login = () => {
                 name="password"
               />
 
+              {error && <p className="error-message">{error}</p>}
 
-              <labelForgotPassword for="ForgotPsw"><b>¿Forgot Password?</b></labelForgotPassword>
-
-              <button id="myButton" type='submit' >Login</button>
+              <button className="boton-login" id="myButton" type="submit">
+                Login
+              </button>
             </div>
           </form>
         </div>
-
-      </div >
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

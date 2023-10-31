@@ -1,57 +1,47 @@
 import './Sidebar.css'
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavLink } from 'react-router-dom'
 
 const Sidedar = () => {
-
-
-
   return (
     <>
       <nav className="bar">
         <div>
-          imagen
+          <img src="https://vortexbird.com/wp-content/uploads/2023/07/Vortexbird.desarrolloSoftware.png" className="imagen-sidebar" />
         </div>
         <div className="divcon">
           <p className="Menu">Menú</p>
         </div>
-        <ul>
+        <ul className='navegacion'>
           <li>
-            <a href="/dashboard" >
-              <button className="Button" id="das">
-               
-                <p>Dashboard</p>
-              </button>
-            </a>
-          </li>
-
-
-
-          <li>
-            <a href="/colaboradores">
-              <button className="Button" id="loc">
-                
-                <p>Colaboradores</p></button>
-            </a>
+            <NavLink to="/dashboard" className="active-link">
+              Dashboard
+            </NavLink>
           </li>
           <li>
-            <a href="/areas" >
-              <button className="Button" id="era">
-               
-                <p>Áreas</p></button>
-            </a>
+            <NavLink to="/logro" className="active-link">
+              Logro
+            </NavLink>
           </li>
           <li>
-            <a href="/conocimientos" >
-              <button className="Button" id="noc">
-                
-                <p>Conocimientos</p></button>
-            </a>
+            <NavLink to="/perfil" className="active-link">
+              Perfil
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/PerRecompensa" className="active-link">
+              Recompensa
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/retorno" className="active-link">
+              Unidades de Retorno
+            </NavLink>
           </li>
         </ul>
       </nav>
     </>
-
   )
 }
 
-export default Sidedar
+export default Sidedar;

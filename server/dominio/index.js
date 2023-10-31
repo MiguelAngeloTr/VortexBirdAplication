@@ -4,15 +4,22 @@ import routes from '../acceso_datos/routes.js'
 import {createPool} from 'mysql2/promise'
 import cors from 'cors';
 
+import path from 'path';
+import { dirname } from 'path'
+import { fileURLToPath } from 'url';
+
 // Para manejar las variables de entorno env
 dotenv.config()
 
-
 const app = express();
 
-app.use(express.json())
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use(cors());
+app.use(express.json())
+app.use(express.static(path.join(__dirname, '../dbimages')))
+
 app.use(routes)
 
 export const pool = createPool({
