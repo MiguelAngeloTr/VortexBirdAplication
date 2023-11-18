@@ -1,4 +1,12 @@
 /* TaskList.css */
+.main-container {
+    display: flex;
+    flex-direction: row; /* Por defecto, es "row", pero esta línea lo reafirma */
+    align-items: flex-start; /* Alinea los elementos verticalmente en la parte superior */
+    justify-content: space-between; /* Espacio entre los elementos */
+  }
+
+
 
 .task-list-container {
     padding: 20px;
@@ -64,9 +72,16 @@
 
 .completed-task {
     color: green;
-  }
-  
-  .pending-task {
+}
+
+.pending-task {
     color: red;
 
-  }
+}
+
+.puntos {
+    text-align: center;
+    color: #F27C38;
+}
+
+

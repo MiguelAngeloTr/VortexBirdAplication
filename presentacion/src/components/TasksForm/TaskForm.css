@@ -61,7 +61,11 @@
     margin-top: 10px;
     
   }
-  
+  .submit{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  } 
   .error-message {
     color: red; /* Color del texto en rojo */
     font-size: 14px; /* Tamaño de fuente */

@@ -5,7 +5,8 @@ import { useTasks } from '../../context/Context';
 
 const Perfil = () => {
 
-  const { rewards, loadReward } = useTasks()
+  const { rewards, loadReward ,users} = useTasks()
+
 
 
 
@@ -43,7 +44,7 @@ const Perfil = () => {
               <ul>
                 <li className="li-perfil">
                   <label className="label-perfil" htmlFor="email">E-mail</label>
-                  <input className="campo-perfil" type="text" value={"Alvaro@gmail.com"} id="campo-email" disabled></input>
+                  <input className="campo-perfil" type="text" value={users.email} id="campo-email" disabled></input>
                 </li>
                 <li className="li-perfil">
                   <label className="label-perfil" htmlFor="numero_telefono">Teléfono 1</label>
@@ -85,7 +86,7 @@ const Perfil = () => {
             />
           </div>
           <div>
-            <h1 id="nombre-completo">{"Álvaro"}</h1>
+            <h1 id="nombre-completo">{users.nombre_usuario}</h1>
             <form id="formulario-ol">
               <ul>
                 {rewards.every(reward => (

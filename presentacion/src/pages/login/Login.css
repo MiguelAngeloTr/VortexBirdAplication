@@ -10,7 +10,7 @@ body {
 
 }
 
-.container {
+.container-login {
     display: flex;
     width: 100%;
 
@@ -178,3 +178,8 @@ body {
     transition: transform 0.2s, box-shadow 0.2s; /* Agregamos transiciones para una animación suave */
 }
 
+.centro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

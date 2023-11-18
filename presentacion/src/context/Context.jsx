@@ -1,10 +1,14 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import {
+  createUserRequest, loginUserRequest, verifyTokenRequest,
+  getTasksByIdRequest, getTasksAllRequest,
   getTasksRequest,
   deleteTaskRequest,
   createTaskRequest,
   getTaskRequest,
   updateTaskRequest,
+  updateTaskRequestPoints,
   toggleTaskDoneRequest,
   getUnitsRequest,
   createUnitRequest,
@@ -26,6 +30,7 @@ import {
   getLevelsRequest,
   deleteLevelRequest,
   getLevelRequest,
+  updateLevelRequest,
   getEvidenciasRequest,
   mostrarEvidenciaRequest,
 } from '../api/api'
@@ -46,16 +51,93 @@ export const useTasks = () => {
 export const ContextProvider = ({ children }) => {
 
   const [tasks, setTasks] = useState([])
+  const [taskAll, setTaskAll] = useState([])
   const [units, setUnits] = useState([])
   const [rewards, setRewards] = useState([])
   const [points, setPoints] = useState([])
   const [levels, setLevels] = useState([])
   const [evidencias, setEvidencias] = useState([])
 
-  //funcion para cargar las actvidades
+  //usuario
+  const [users, setUsers] = useState([])
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  //funcion para crear un usuario
+  const createUser = async (user) => {
+    try {
+      const response = await createUserRequest(user)
+      setUsers(response.data)
+      setIsAuthenticated(true)
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  //funcion para crear un usuario
+  const loginUser = async (user) => {
+    try {
+      const response = await loginUserRequest(user)
+      setUsers(response.data)
+      setIsAuthenticated(true)
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const logout =()=>{
+    Cookies.remove("token")
+    setIsAuthenticated(false)
+    setUsers(null)
+  }
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const cookies = Cookies.get();
+      if (!cookies.token) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await verifyTokenRequest(cookies.token);
+        console.log(res);
+        if (!res.data) return setIsAuthenticated(false);
+
+        setIsAuthenticated(true);
+        setUsers(res.data);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setLoading(false);
+      }
+    };
+    checkLogin();
+  }, []);
+
+  //funcion para mostrar las actvidades de un usuario especifico
+  async function getTasksById(id) {
+    const response = await getTasksByIdRequest(id)
+    setTasks(response.data)
+    console.log(response.data);
+    return response.data
+  }
+    
+  //funcion para cargar todas las actvidades 
+ {/* async function loadTasksAll() {
+    const response = await getTasksAllRequest()
+    setTaskAll(response.data);
+    
+  } */}
+
+  //funcion para cargar las actvidades de un usuario activo
   async function loadTasks() {
     const response = await getTasksRequest()
+    
     setTasks(response.data);
+    
   }
 
   //funcion para eliminar las actividades
@@ -94,6 +176,15 @@ export const ContextProvider = ({ children }) => {
   const updateTask = async (id, newFields) => {
     try {
       const response = await updateTaskRequest(id, newFields)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  //funcion para actualizar una actividad
+  const updateTaskPoints = async (id, newFields) => {
+    try {
+      const response = await updateTaskRequestPoints(id, newFields)
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -107,7 +198,7 @@ export const ContextProvider = ({ children }) => {
       await toggleTaskDoneRequest(id, taskFound.estado === 0 || taskFound.estado === null ? 1 : 0);
       setTasks(
         tasks.map((task) =>
-          task.id === id ? { ...task, estado:  taskFound.estado === 0 || taskFound.estado === null ? 1 : 0 } : task
+          task.id === id ? { ...task, estado: taskFound.estado === 0 || taskFound.estado === null ? 1 : 0 } : task
         )
       );
     } catch (error) {
@@ -220,65 +311,65 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-    //funcion para cambiar el estado/preferencia de Libros
-    const toggleRewardDoneLibros = async (id) => {
-      try {
-        const RewardFound = rewards.find((reward) => reward.id === id);
-        await toggleRewardDoneRequestLibros(id, RewardFound.flagLibros === 0 ? 1 : 0);
-        setRewards(
-          rewards.map((reward) =>
-            reward.id === id ? { ...reward, flagLibros: RewardFound.flagLibros === 0 ? 1 : 0 } : reward
-          )
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //funcion para cambiar el estado/preferencia de Libros
+  const toggleRewardDoneLibros = async (id) => {
+    try {
+      const RewardFound = rewards.find((reward) => reward.id === id);
+      await toggleRewardDoneRequestLibros(id, RewardFound.flagLibros === 0 ? 1 : 0);
+      setRewards(
+        rewards.map((reward) =>
+          reward.id === id ? { ...reward, flagLibros: RewardFound.flagLibros === 0 ? 1 : 0 } : reward
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    //funcion para cambiar el estado/preferencia de gymSalud
-    const toggleRewardDoneSalud = async (id) => {
-      try {
-        const RewardFound = rewards.find((reward) => reward.id === id);
-        await toggleRewardDoneRequestSalud(id, RewardFound.flagGimnasio === 0 ? 1 : 0);
-        setRewards(
-          rewards.map((reward) =>
-            reward.id === id ? { ...reward, flagGimnasio: RewardFound.flagGimnasio === 0 ? 1 : 0 } : reward
-          )
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //funcion para cambiar el estado/preferencia de gymSalud
+  const toggleRewardDoneSalud = async (id) => {
+    try {
+      const RewardFound = rewards.find((reward) => reward.id === id);
+      await toggleRewardDoneRequestSalud(id, RewardFound.flagGimnasio === 0 ? 1 : 0);
+      setRewards(
+        rewards.map((reward) =>
+          reward.id === id ? { ...reward, flagGimnasio: RewardFound.flagGimnasio === 0 ? 1 : 0 } : reward
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-     //funcion para cambiar el estado/preferencia de Arte
-     const toggleRewardDoneArte = async (id) => {
-      try {
-        const RewardFound = rewards.find((reward) => reward.id === id);
-        await toggleRewardDoneRequestArte(id, RewardFound.flagArte === 0 ? 1 : 0);
-        setRewards(
-          rewards.map((reward) =>
-            reward.id === id ? { ...reward, flagArte: RewardFound.flagArte === 0 ? 1 : 0 } : reward
-          )
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //funcion para cambiar el estado/preferencia de Arte
+  const toggleRewardDoneArte = async (id) => {
+    try {
+      const RewardFound = rewards.find((reward) => reward.id === id);
+      await toggleRewardDoneRequestArte(id, RewardFound.flagArte === 0 ? 1 : 0);
+      setRewards(
+        rewards.map((reward) =>
+          reward.id === id ? { ...reward, flagArte: RewardFound.flagArte === 0 ? 1 : 0 } : reward
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    //funcion para cambiar el estado/preferencia de Alimentacion
-    const toggleRewardDoneAlimentacion = async (id) => {
-      try {
-        const RewardFound = rewards.find((reward) => reward.id === id);
-        await toggleRewardDoneRequestAlimentacion(id, RewardFound.flagAlimentacion === 0 ? 1 : 0);
-        setRewards(
-          rewards.map((reward) =>
-            reward.id === id ? { ...reward, flagAlimentacion: RewardFound.flagAlimentacion === 0 ? 1 : 0 } : reward
-          )
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //funcion para cambiar el estado/preferencia de Alimentacion
+  const toggleRewardDoneAlimentacion = async (id) => {
+    try {
+      const RewardFound = rewards.find((reward) => reward.id === id);
+      await toggleRewardDoneRequestAlimentacion(id, RewardFound.flagAlimentacion === 0 ? 1 : 0);
+      setRewards(
+        rewards.map((reward) =>
+          reward.id === id ? { ...reward, flagAlimentacion: RewardFound.flagAlimentacion === 0 ? 1 : 0 } : reward
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   ///
 
@@ -330,7 +421,7 @@ export const ContextProvider = ({ children }) => {
     setLevels(response.data);
   }
 
-  //funcion para eliminar las actividades
+  //funcion para eliminar los niveles
   const deleteLevel = async (id) => {
     try {
       const response = await deleteLevelRequest(id)
@@ -351,6 +442,17 @@ export const ContextProvider = ({ children }) => {
       console.error(error);
     }
   }
+
+  //funcion para actualizar un nivel
+  const updateLevel = async (id) => {
+    try {
+      const response = await updateLevelRequest(id)
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   ///
 
@@ -373,7 +475,7 @@ export const ContextProvider = ({ children }) => {
   }
 
 
-  return <Context.Provider value={{ tasks, loadTasks, deleteTask, createTask, getTask, updateTask, toggleTaskDone, units, loadUnits, createUnit, deleteUnit, getUnit, updateUnit, toggleUnitDone, rewards, loadReward, toggleRewardDoneTecnologia, toggleRewardDonevideojuegos, toggleRewardDoneLibros, toggleRewardDoneSalud, toggleRewardDoneArte, toggleRewardDoneAlimentacion, points, loadPoints, deletePoint, getPoint, updatePoint, levels, loadLevels, deleteLevel, getLevel, loadEvidencias,  mostrarEvidencia, evidencias }} >
+  return <Context.Provider value={{ createUser, loginUser, users, isAuthenticated,logout, loading, tasks, getTasksById, taskAll, loadTasks, deleteTask, createTask, getTask, updateTask, updateTaskPoints, toggleTaskDone, units, loadUnits, createUnit, deleteUnit, getUnit, updateUnit, toggleUnitDone, rewards, loadReward, toggleRewardDoneTecnologia, toggleRewardDonevideojuegos, toggleRewardDoneLibros, toggleRewardDoneSalud, toggleRewardDoneArte, toggleRewardDoneAlimentacion, points, loadPoints, deletePoint, getPoint, updatePoint, levels, loadLevels, deleteLevel, getLevel, updateLevel, loadEvidencias, mostrarEvidencia, evidencias }} >
     {children}
   </Context.Provider>
 }

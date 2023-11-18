@@ -1,94 +1,104 @@
-/* Resetear márgenes y relleno del cuerpo */
-body {
-    margin: 0;
+* {
     padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
 }
 
-/* Estilo del sidebar */
-.bar {
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.sidebar {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 15rem;
+    left: -250px;
+    width: 250px;
     height: 100%;
-    background: #c9c9c9;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    background: #1E293A;
+    transition: all .5s ease;
 }
 
-
-
-/* Estilo del logo */
-#Logo {
-    width: 181px;
-    height: 50px;
-    margin: 2.25rem 0 1rem 2.5rem;
+.sidebar header {
+    font-size: 22px;
+    color: white;
+    line-height: 70px;
+    text-align: center;
+    background: #1E293A;
+    user-select: none;
 }
 
-/* Estilo del menú */
-.Menu {
-    font-family: 'Poppins', 'Arial';
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 20px;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    margin-left: 2.5rem;
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    transition: .4s;
+    text-decoration: none;
 }
 
-.active-link {
-    
-    /* Color de fondo para enlaces activos */
-    color: #000000;
-    /* Color de texto para enlaces activos */
-    padding: 20px;
-    /* Espaciado para enlaces activos */
-    border-radius: 5px;
-    /* Bordes redondeados para enlaces activos */
-    
-    
+ul li:hover a {
+    padding-left: 50px;
 }
 
-.active-link:hover {
-    background-color: #F27C38;
-    /* Cambiar color de fondo al pasar el mouse sobre enlaces activos */
+.sidebar ul a i {
+    margin-right: 16px;
 }
 
-/* Estilo de los íconos */
-.divcon {
-    position: relative;
-    margin: 1.5rem 0 1rem 2.5rem;
+#check {
+    display: none;
 }
 
+label #btn,
 
-
-#icon {
-    width: 18px;
-    height: 18px;
-    color: #FFFFFF;
-    margin-left: 0;
-}
-
-/* Estilo de los botones */
-.Button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 7px 3px;
-    gap: 10px;
-    width: 100px;
-    height: 40px;
-    background: #100C56;
+label #cancel {
+    position: absolute;
+    background: #042331;
     border-radius: 3px;
-    margin: 0.3rem 0 0 0.5rem;
-    border: none;
-    transition: background 0.3s ease;
+    cursor: pointer;
 }
 
-.Button:hover {
-    background: #3A5A80;
-    cursor: pointer;
+label #btn {
+    left: 40px;
+    top: 25px;
+    font-size: 35px;
+    color: white;
+    padding: 6px 12px;
+    transition: all .5s;
+}
+
+label #cancel {
+    z-index: 1111;
+    left: -195px;
+    top: 17px;
+    font-size: 30px;
+    color: #0a5275;
+    padding: 4px 9px;
+    transition: all .5s ease;
+}
+
+#check:checked~.sidebar {
+    left: 0;
+}
+
+#check:checked~label #btn {
+    left: 250px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#check:checked~label #cancel {
+    left: 260px;
+}
+
+#check:checked~section {
+    margin-left: 250px;
 }
 
 .imagen-sidebar {
@@ -96,49 +106,3 @@ body {
     height: auto;
     /* Para mantener la proporción de aspecto original */
 }
-
-/* Estilo de los párrafos */
-.navegacion p {
-    display: flex;
-    height: 24px;
-    font-family: 'Poppins';
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #FFFFFF;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    justify-content: flex-start;
-    margin: 0;
-}
-
-/* Estilo de los enlaces */
-a {
-    color: #FFFFFF;
-    text-decoration: none;
-}
-
-/* Estilo de las listas */
-li {
-    margin-bottom: 1rem;
-    list-style-type: none;
-}
-
-/* Estilo de las listas desordenadas */
-ul {
-    padding-left: 0;
-}
-
-/* Estilo del botón de logout */
-.logout {
-    position: absolute;
-    bottom: 5px;
-    left: 3px;
-    margin-left: 2.5rem;
-}
-
-.navegacion li {
-    margin-bottom: 40px; /* Espacio inferior entre elementos NavLink */
-    
-  }

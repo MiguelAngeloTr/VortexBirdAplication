@@ -11,6 +11,8 @@ const DetalleTask = ({ detalleTaskId }) => {
         loadTasks()
     }, [])
 
+   
+
     return (
 
         <>

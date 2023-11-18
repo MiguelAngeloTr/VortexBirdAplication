@@ -58,15 +58,15 @@ const PerRecompensa = () => {
                   checked={reward.flagTecnologia === 1}
                   onClick={() => handleEstadoTecnologia(reward.id)}
                 />
-                <div className="icon-container">
+                <div className="icon-container-white">
                   <FontAwesomeIcon icon={faLaptop} size="2x" className="tech-icon" />
                 </div>
                 <h2 className="card-title">Tecnología</h2>
               </div>
             </div>
 
-            <div className="card">
-              <div className="card-content">
+            <div className="card dark">
+              <div className="card-content ">
                 <input
                   className="checkbox"
                   type='checkbox'
@@ -74,7 +74,7 @@ const PerRecompensa = () => {
                   onClick={() => handleEstadoVidejuego(reward.id)}
                 />
                 <div className="icon-container">
-                  <FontAwesomeIcon icon={faGamepad} size="2x" className="tech-icon" />
+                  <FontAwesomeIcon icon={faGamepad} size="2x" className="icon-white" />
                 </div>
                 <h2 className="card-title">Videojuegos</h2>
               </div>
@@ -88,7 +88,7 @@ const PerRecompensa = () => {
                   checked={reward.flagLibros === 1}
                   onClick={() => handleEstadoLibro(reward.id)}
                 />
-                <div className="icon-container">
+                <div className="icon-container-white">
                   <FontAwesomeIcon icon={faBook} size="2x" className="tech-icon" />
                 </div>
                 <h2 className="card-title">Libros y Educación</h2>
@@ -97,7 +97,7 @@ const PerRecompensa = () => {
           </div>
 
           <div className="card-container">
-            <div className="card">
+            <div className="card dark">
               <div className="card-content">
                 <input
                   className="checkbox"
@@ -106,7 +106,7 @@ const PerRecompensa = () => {
                   onClick={() => handleEstadoSalud(reward.id)}
                 />
                 <div className="icon-container">
-                  <FontAwesomeIcon icon={faDumbbell} size="2x" className="tech-icon" />
+                  <FontAwesomeIcon icon={faDumbbell} size="2x" className="icon-white" />
                 </div>
                 <h2 className="card-title">Gimnasio y Salud</h2>
               </div>
@@ -120,14 +120,14 @@ const PerRecompensa = () => {
                   checked={reward.flagArte === 1}
                   onClick={() => handleEstadoArte(reward.id)}
                 />
-                <div className="icon-container">
+                <div className="icon-container-white">
                   <FontAwesomeIcon icon={faBicycle} size="2x" className="tech-icon" />
                 </div>
                 <h2 className="card-title">Ciclismo</h2>
               </div>
             </div>
 
-            <div className="card">
+            <div className="card dark">
               <div className="card-content">
                 <input
                   className="checkbox"
@@ -136,7 +136,7 @@ const PerRecompensa = () => {
                   onClick={() => handleEstadoAlimentacion(reward.id)}
                 />
                 <div className="icon-container">
-                  <FontAwesomeIcon icon={faUtensils} size="2x" className="tech-icon" />
+                  <FontAwesomeIcon icon={faUtensils} size="2x" className="icon-white" />
                 </div>
                 <h2 className="card-title">Alimentación y Restaurantes</h2>
               </div>

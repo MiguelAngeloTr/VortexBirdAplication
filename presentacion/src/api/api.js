@@ -1,6 +1,29 @@
-import axios from "axios";
+import axios from "./axios";
 
-//peticion para obtener todas las actividades
+//login
+
+//llamado a la api para crear un usuario
+export const createUserRequest = async (user) =>
+  await axios.post('http://localhost:4000/register', user)
+
+ //llamado a la api para loguear un usuario
+export const loginUserRequest = async (user) =>
+await axios.post('http://localhost:4000/login', user)
+
+//verificar Token
+export const verifyTokenRequest = async () => axios.get('http://localhost:4000/verify');
+
+///
+
+//peticion para obtener una actividad de un usuario especifico
+export const getTasksByIdRequest = async (id) =>
+  await axios.post('http://localhost:4000/tasksById', id);
+
+ //peticion para obtener todas las actividades d
+export const getTasksAllRequest = async () =>
+await axios.get('http://localhost:4000/tasksAll');
+
+//peticion para obtener todas las actividades de un usuario activo
 export const getTasksRequest = async () =>
   await axios.get("http://localhost:4000/tasks");
 
@@ -26,6 +49,9 @@ export const toggleTaskDoneRequest = async (id, estado) =>
     estado,
 });
 
+//
+export const updateTaskRequestPoints = async (id, newFields) =>
+  await axios.put(`http://localhost:4000/tasks/${id}`, newFields);
 
 
 ///
@@ -132,6 +158,11 @@ export const deleteLevelRequest = async (id) =>
 //llamado a la api para obtener una puntuacion en especifico
 export const getLevelRequest = async (id) =>
   await axios.get(`http://localhost:4000/levels/${id}`);
+
+//llamado a la api para actulizar el nivel
+export const updateLevelRequest = async (id) =>
+await axios.put(`http://localhost:4000/levels/${id}`);
+
 
 
 ///

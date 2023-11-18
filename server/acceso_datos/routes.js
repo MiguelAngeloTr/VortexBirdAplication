@@ -1,10 +1,13 @@
 import { Router } from "express";
-import {
+import {authRequired} from './middlewares/validateToken.js'
+import { register,login,logout,perfil, verifyToken,
+    getTasksById, getTasksAll,
     getTask,
     getTasks,
     createTask,
     updateTask,
     deleteTask,
+    updateTaskPoints,
     getUnits,
     getUnit,
     createUnit,
@@ -33,6 +36,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path'
 import { pool } from '../dominio/index.js'
 import fs from 'fs';
+import { profile } from "console";
 
 
 
@@ -136,20 +140,47 @@ router.get("/images/get", async (req, res) => {
 
 //Solicitudes http para el manejo de las actividades//
 
+//ruta para logear usuario
+
+router.post('/login' , login)
+
+//ruta para un nuevo usuario
+router.post('/register' , register)
+
+//ruta para cerrar sesion
+router.post('/logout', logout)
+
+//verificar Token
+router.get("/verify", verifyToken);
+
+//ruta 
+router.get('/perfil', authRequired , perfil)
+///
+
+
+//peticion para buscar las actividades de un usuario
+router.post("/tasksById", getTasksById)
+
 //peticion para obtener todas las actividades
-router.get("/tasks", getTasks);
+router.get("/tasksAll", getTasksAll );
+
+//peticion para obtener todas las actividades de un usuario activo
+router.get("/tasks", authRequired, getTasks);
 
 //peticion para obtener una actividad en especifico
 router.get("/tasks/:id", getTask)
 
 //query para crear una nueva actividad
-router.post("/tasks", createTask);
+router.post("/tasks", authRequired, createTask);
 
 //query para actulizar una actividad especifica
 router.put("/tasks/:id", updateTask);
 
 //query para eliminar una actividad especifica
 router.delete("/tasks/:id", deleteTask);
+
+//query para actulizar una actividad especifica con puntos
+router.put("/tasksPoints/:id", updateTaskPoints);
 
 
 //Solicitudes http para el manejo de las unidades retorno//

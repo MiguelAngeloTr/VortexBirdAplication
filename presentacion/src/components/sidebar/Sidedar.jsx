@@ -1,45 +1,53 @@
 import './Sidebar.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAward, faUser, faTrophy, faTachometerAlt, faTimes, faBars, faSearch,faSignOutAlt    } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useTasks } from '../../context/Context';
+
+
 
 const Sidedar = () => {
+
+  const{ logout }=useTasks()
+
+  const location = useLocation();
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    // Mantén el checkbox marcado cuando cambia la ubicación (navegas a otro componente)
+    setIsChecked(true);
+  }, [location.pathname]);
+  
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
     <>
-      <nav className="bar">
-        <div>
-          <img src="https://vortexbird.com/wp-content/uploads/2023/07/Vortexbird.desarrolloSoftware.png" className="imagen-sidebar" />
-        </div>
-        <div className="divcon">
-          <p className="Menu">Menú</p>
-        </div>
-        <ul className='navegacion'>
-          <li>
-            <NavLink to="/dashboard" className="active-link">
-              Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/logro" className="active-link">
-              Logro
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/perfil" className="active-link">
-              Perfil
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/PerRecompensa" className="active-link">
-              Recompensa
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/retorno" className="active-link">
-              Unidades de Retorno
-            </NavLink>
-          </li>
+    <input type="checkbox" id = "check" checked={isChecked} onChange={handleCheckboxChange} />
+    <label htmlFor="check">
+    <FontAwesomeIcon id='btn' icon={faBars} />
+    <FontAwesomeIcon id='cancel' icon={faTimes } />
+    </label>
+     <div className="sidebar">
+        <header>
+          <img src="https://vortexbird.com/wp-content/uploads/2023/07/Vortexbird.desarrolloSoftware.png" alt="" className="imagen-sidebar"  />
+        </header>
+        <ul>
+          <li><Link to="/dashboard"> <FontAwesomeIcon icon={faTachometerAlt} /> Dashboard  </Link> </li>
+          <li><Link to="/logro" > <FontAwesomeIcon icon={faTrophy} /> Logros  </Link> </li>
+          <li><Link to="/perfil"  > <FontAwesomeIcon icon={faUser} />  Perfil  </Link> </li>        
+          <li><Link to="/PerRecompensa"   > <FontAwesomeIcon icon={faAward} /> Personalización de Recompensas </Link> </li>
+          <li><Link to="/consultaActividad"   > <FontAwesomeIcon icon={faSearch} /> Consultar Avance </Link> </li>
+          <li><Link to="/"onClick={()=>{
+            logout()
+          }}><FontAwesomeIcon icon={faSignOutAlt}/> Cerrar Sesión</Link></li>
         </ul>
-      </nav>
+      </div>
+      
     </>
   )
 }

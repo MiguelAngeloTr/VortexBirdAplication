@@ -17,9 +17,11 @@ const Files = ({ activeTaskId }) => {
 
     const [evidenceUploaded, setEvidenceUploaded] = useState(false);
 
-    const { tasks, loadTasks,  toggleTaskDone, points, updatePoint, loadPoints } = useTasks();
+    const { tasks, loadTasks,  toggleTaskDone, points, updatePoint, loadPoints, updateTaskPoints, updateTask} = useTasks();
 
     const task = tasks.find(t => t.id === activeTaskId);
+
+    const [totalPuntos ,setTotalPuntos] = useState(1)
 
 
     useEffect(() => {
@@ -77,10 +79,27 @@ const Files = ({ activeTaskId }) => {
     };
 
     const handlePoints = async (pointId) => {
-        await updatePoint(pointId);
+        const differenceInDays = calculateDateDifference(task.fecha_inicio, task.fecha_final);
+      
+        for (let i = 0; i < differenceInDays; i++) {
+          await updatePoint(pointId);
+          
+        }
+        setTotalPuntos(differenceInDays * 10)
+        await updateTask(task.id, totalPuntos.toString());
+        toast.success('+' + differenceInDays * 10 + "puntos");
         setPointsObtained(true); // Actualiza el estado para indicar que se obtuvieron los puntos
-        toast.success("+50 Puntos");
-    }
+
+        
+      };
+
+    const calculateDateDifference = (startDate, endDate) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const differenceInMilliseconds = end - start;
+        const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+        return differenceInDays;
+      };
 
     return (
         <>
@@ -89,6 +108,7 @@ const Files = ({ activeTaskId }) => {
             <h5>Para finalizar tu actividad debes adjuntar evidencia</h5><br />
             <h6>Solo se permite formato imagen</h6>
             <p className="unit-info"> Actividad: {task.nombre}</p>
+            <p>{totalPuntos}</p>
             <input id="fileinput" type="file" onChange={selectedHandler} />
             <button
                 type="button"
